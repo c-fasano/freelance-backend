@@ -4,7 +4,7 @@ const Schema = mongoose.Schema
 
 const taskSchema = new Schema(
   {
-    task_text: {
+    task: {
       type: String,
       required: true
     },
@@ -25,24 +25,29 @@ const projectSchema = new Schema({
   },
   startDate: {
       type: Date, 
-      required: false
+      required: true
   },
   endDate: {
     type: Date, 
-    required: false
+    required: true
 },
   is_Active: {
       type: Boolean,
       default: true
   },
 
-  tasks:[taskSchema],
+  taskList:[taskSchema],
 
   hourlyRate:{
     type: Number,
     required: true
   },
-
+  hoursWorked:{
+    type: Number,
+    default: 0,
+    min:0
+  }
+  ,
   clientList: [
     {
       type: mongoose.Schema.Types.ObjectId,
@@ -58,7 +63,7 @@ invoiceList: [
 ]
 }, { timestamps: true })
 
-const Profile = mongoose.model('Profile', profileSchema)
+const Project = mongoose.model('Project', projectSchema)
 
 export {
   Project
