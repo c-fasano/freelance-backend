@@ -6,7 +6,8 @@ const clientSchema = new Schema({
       required: true
   },
   email: {
-      type: Date, 
+      type: String, 
+      lowercase: true,
       required: true
   },
 
@@ -15,11 +16,19 @@ const clientSchema = new Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Project'
     }
-  ]
+  ],
+
+invoiceList: [
+  {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Invoice'
+  }
+]
 }, { timestamps: true })
 
-const Profile = mongoose.model('Profile', profileSchema)
+const Client = mongoose.model('Client', clientSchema)
 
 export {
   Client
+} 
 } 
