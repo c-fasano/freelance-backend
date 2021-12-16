@@ -31,4 +31,3 @@ const Client = mongoose.model('Client', clientSchema)
 export {
   Client
 } 
-} 
