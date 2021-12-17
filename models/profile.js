@@ -10,9 +10,15 @@ const profileSchema = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Project'
     }
-  ]
-
+  ],
+client: [
+  {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Client'
+  }
+],
 },
+
 {
     timestamps: true,
 })

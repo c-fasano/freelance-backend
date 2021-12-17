@@ -1,5 +1,7 @@
 import mongoose from 'mongoose'
 
+const Schema = mongoose.Schema
+
 const clientSchema = new Schema({
   name: {
       type: String,
@@ -11,7 +13,7 @@ const clientSchema = new Schema({
       required: true
   },
   
-  added_by: { type: mongoose.Schema.Types.ObjectId, ref: 'Profile' },
+  owner: { type: mongoose.Schema.Types.ObjectId, ref: 'Profile' },
 
   projectList: [
     {
