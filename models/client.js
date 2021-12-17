@@ -10,6 +10,8 @@ const clientSchema = new Schema({
       lowercase: true,
       required: true
   },
+  
+  added_by: { type: mongoose.Schema.Types.ObjectId, ref: 'Profile' },
 
   projectList: [
     {
