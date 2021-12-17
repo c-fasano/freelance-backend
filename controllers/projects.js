@@ -27,9 +27,47 @@ const index = async (req, res) => {
   }
 }
 
+const show = async (req, res) => {
+  try {
+    const project = await Project.findById(req.params.id)
+      
+    return res.status(200).json(project)
+  } catch (err) {
+    return res.status(500).json(err)
+  }
+}
+
+const update = async (req, res) => {
+  try {
+    const updateData = { is_resolved: true }
+    const updatedProject = await Project.findByIdAndUpdate(
+      req.params.id,
+      updateData,
+      { new: true }
+    )
+    return res.status(200).json(updatedProject)
+  } catch (err) {
+    return res.status(500).json(err)
+  }
+}
+
+const deleteProject = async (req, res) => {
+  try {
+    await Project.findByIdAndDelete(req.params.id)
+    const profile = await Profile.findById(req.user.profile)
+    profile.projects.remove({ _id: req.params.id })
+    await profile.save()
+    return res.status(204).end()
+  } catch (err) {
+    return res.status(500).json(err)
+  }
+}
 
 
 export {
   create,
   index,
+  show,
+  update,
+  deleteProject as delete
 }
