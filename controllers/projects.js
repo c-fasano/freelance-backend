@@ -62,12 +62,38 @@ const deleteProject = async (req, res) => {
     return res.status(500).json(err)
   }
 }
+const createTask = async (req, res) => {
+  try {
+    req.body.taskOwner = req.user.profile
+    const project = await Project.findById(req.params.id)
+    project.taskList.push(req.body)
+    await project.save()
+    const newTask = project.taskList[project.taskList.length - 1]
 
+
+    return res.status(201).json(newComment)
+  } catch (err) {
+    res.status(500).json(err)
+  }
+}
+const deleteTask = async (req, res) => {
+  try {
+    const project = await Project.findById(req.params.taskId)
+    project.taskList.remove({ _id: req.params.taskId })
+
+    await post.save()
+    return res.status(204).end()
+  } catch (err) {
+    res.status(500).json(err)
+  }
+}
 
 export {
   create,
   index,
   show,
   update,
-  deleteProject as delete
+  deleteProject as delete,
+  createTask,
+  deleteTask
 }
