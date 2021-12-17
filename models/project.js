@@ -13,6 +13,8 @@ const taskSchema = new Schema(
       default: 'Not-started',
       enum: ['Not-started','In-Progress','Complete']
     },
+    taskOwner: { type: mongoose.Schema.Types.ObjectId, ref: 'Project' },
+    
   },
   { timestamps: true }
 )
@@ -46,8 +48,9 @@ const projectSchema = new Schema({
     type: Number,
     default: 0,
     min:0
-  }
-  ,
+  },
+  owner: { type: mongoose.Schema.Types.ObjectId, ref: 'Profile' },
+  
   clientList: [
     {
       type: mongoose.Schema.Types.ObjectId,

@@ -3,7 +3,7 @@ import { Project } from "../models/project.js";
 
 const create = async (req, res) => {
   try {
-    req.body.added_by = req.user.profile
+    req.body.owner = req.user.profile //change this to a field
     const project = await new Project(req.body)
     await project.save()
     await Profile.updateOne(
@@ -18,7 +18,7 @@ const create = async (req, res) => {
 
 const index = async (req, res) => {
   try {
-    const projects = await Project.find({})
+    const projects = await Project.find({owner: req.user.profile })
       .sort({ startDate: 'desc' })
 
     return res.status(200).json(projects)
