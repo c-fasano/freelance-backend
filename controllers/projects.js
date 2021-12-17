@@ -78,10 +78,11 @@ const createTask = async (req, res) => {
 }
 const deleteTask = async (req, res) => {
   try {
-    const project = await Project.findById(req.params.taskId)
+    const project = await Project.findById(req.params.projectId)
+    console.log(req.params.taskId)
     project.taskList.remove({ _id: req.params.taskId })
 
-    await post.save()
+    await project.save()
     return res.status(204).end()
   } catch (err) {
     res.status(500).json(err)
