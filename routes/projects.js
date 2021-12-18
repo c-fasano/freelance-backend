@@ -16,7 +16,7 @@ router.get('/:id', checkAuth, projectCtrl.show)
 router.put('/:id', checkAuth, projectCtrl.update)
 router.delete('/:id', checkAuth, projectCtrl.delete)
 
-//taks for project routes 
+//task for project routes 
 router.post('/:id/tasks', checkAuth, projectCtrl.createTask)
 router.delete('/:projectId/tasks/:taskId', checkAuth, projectCtrl.deleteTask)
 
