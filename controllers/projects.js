@@ -39,10 +39,9 @@ const show = async (req, res) => {
 
 const update = async (req, res) => {
   try {
-    const updateData = { is_resolved: true }
     const updatedProject = await Project.findByIdAndUpdate(
       req.params.id,
-      updateData,
+      req.body,
       { new: true }
     )
     return res.status(200).json(updatedProject)
