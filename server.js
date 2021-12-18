@@ -8,6 +8,7 @@ import { router as profilesRouter } from './routes/profiles.js'
 import { router as authRouter } from './routes/auth.js'
 import { router as projectsRouter } from './routes/projects.js'
 import { router as clientsRouter } from './routes/clients.js'
+import { router as invoicesRouter } from './routes/invoices.js'
 
 
 import('./config/database.js')
@@ -22,6 +23,7 @@ app.use('/api/auth', authRouter)
 app.use('/api/profiles', profilesRouter)
 app.use('/api/projects', projectsRouter)
 app.use('/api/clients', clientsRouter)
+app.use('/api/invoices', invoicesRouter)
 
 
 app.use(function (req, res, next) {

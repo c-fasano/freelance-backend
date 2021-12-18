@@ -5,6 +5,10 @@ const Schema = mongoose.Schema
 
 
 const invoiceSchema = new Schema({
+  title: {
+    type: String,
+    required: true
+},
   dateCreated: {
       type: Date, 
       required: true
@@ -15,7 +19,7 @@ const invoiceSchema = new Schema({
 },
   is_Paid: {
       type: Boolean,
-      default: true
+      default: false
   },
   projectList: [
     {
