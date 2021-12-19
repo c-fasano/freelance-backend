@@ -56,7 +56,7 @@ const deleteProject = async (req, res) => {
     await Project.findByIdAndDelete(req.params.id)
     const profile = await Profile.findById(req.user.profile)
     console.log(profile)
-    profile.projects.remove({ _id: req.params.id })
+    profile.project.remove({ _id: req.params.id })
     await profile.save()
     return res.status(204).end()
   } catch (err) {
@@ -72,7 +72,7 @@ const createTask = async (req, res) => {
     const newTask = project.taskList[project.taskList.length - 1]
 
 
-    return res.status(201).json(newComment)
+    return res.status(201).json(newTask)
   } catch (err) {
     res.status(500).json(err)
   }
