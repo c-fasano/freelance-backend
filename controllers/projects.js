@@ -67,12 +67,14 @@ const createTask = async (req, res) => {
   try {
     req.body.taskOwner = req.user.profile
     const project = await Project.findById(req.params.id)
+    console.log(project)
     project.taskList.push(req.body)
     await project.save()
+    console.log(project)
     const newTask = project.taskList[project.taskList.length - 1]
 
 
-    return res.status(201).json(newComment)
+    return res.status(201).json(newTask)
   } catch (err) {
     res.status(500).json(err)
   }
