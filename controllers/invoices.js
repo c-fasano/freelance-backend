@@ -1,14 +1,22 @@
 import { Profile } from "../models/profile.js";
 import { Invoice } from "../models/invoice.js";
+import { Project } from "../models/project.js";
+import { Client } from "../models/client.js";
+
 
 const create = async (req, res) => {
   try {
-    req.body.owner = req.user.profile //change this to a field
+    req.body.creator = req.user.profile //change this to a field
     const invoice = await new Invoice(req.body)
     await invoice.save()
-    await Invoice.updateOne(
+    await Profile.updateOne(
       { _id: req.user.profile },
-      { $push: { invoices: invoice } }
+      { $push: { invoice: invoice } }
+    )
+    
+    await Project.update(
+      {owner: req.user.profile },
+      { $push: { invoiceList: invoice } }
     )
     return res.status(201).json(invoice)
   } catch (err) {
@@ -18,7 +26,7 @@ const create = async (req, res) => {
 
 const index = async (req, res) => {
   try {
-    const invoices = await Invoice.find({owner: req.user.profile })
+    const invoices = await Invoice.find({creator: req.user.profile })
       .sort({ dueDate: 'desc' })
 
     return res.status(200).json(invoices)
@@ -29,9 +37,9 @@ const index = async (req, res) => {
 
 const show = async (req, res) => {
   try {
-    const project = await Project.findById(req.params.id)
+    const invoice = await Invoice.findById(req.params.id)
       
-    return res.status(200).json(project)
+    return res.status(200).json(invoice)
   } catch (err) {
     return res.status(500).json(err)
   }
@@ -39,12 +47,12 @@ const show = async (req, res) => {
 
 const update = async (req, res) => {
   try {
-    const updatedProject = await Project.findByIdAndUpdate(
+    const updatedInvoice = await Invoice.findByIdAndUpdate(
       req.params.id,
       req.body,
       { new: true }
     )
-    return res.status(200).json(updatedProject)
+    return res.status(200).json(updatedInvoice)
   } catch (err) {
     return res.status(500).json(err)
   }
@@ -52,16 +60,22 @@ const update = async (req, res) => {
 
 const deleteInvoice = async (req, res) => {
   try {
-    await Project.findByIdAndDelete(req.params.id)
+    //await Invoice.findByIdAndDelete(req.params.id)
     const profile = await Profile.findById(req.user.profile)
-    profile.projects.remove({ _id: req.params.id })
+    profile.invoice.remove({ _id: req.params.id })
+    const project = await Project.find({})
+    project.forEach(element => {
+      element.invoiceList.remove({ _id: req.params.id })
+    });
+
+
+
     await profile.save()
     return res.status(204).end()
   } catch (err) {
     return res.status(500).json(err)
   }
 }
-
 
 export {
   create,

@@ -16,6 +16,13 @@ client: [
     ref: 'Client'
   }
 ],
+
+invoice: [
+  {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Invoice'
+  }
+],
 },
 
 {

@@ -17,16 +17,19 @@ const invoiceSchema = new Schema({
     type: Date, 
     required: false
 },
+
+  creator: { type: mongoose.Schema.Types.ObjectId, ref: 'Profile' },
+
   is_Paid: {
       type: Boolean,
       default: false
   },
-  projectList: [
+  projectBilled: 
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Project'
     }
-  ]
+  
 , 
 clientList: [
   {
