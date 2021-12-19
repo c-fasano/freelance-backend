@@ -8,8 +8,9 @@ const create = async (req, res) => {
     await project.save()
     await Profile.updateOne(
       { _id: req.user.profile },
-      { $push: { projects: project } }
+      { $push: { project: project } }
     )
+    
     return res.status(201).json(project)
   } catch (err) {
     return res.status(500).json(err)
@@ -54,6 +55,7 @@ const deleteProject = async (req, res) => {
   try {
     await Project.findByIdAndDelete(req.params.id)
     const profile = await Profile.findById(req.user.profile)
+    console.log(profile)
     profile.projects.remove({ _id: req.params.id })
     await profile.save()
     return res.status(204).end()
