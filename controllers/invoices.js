@@ -58,7 +58,24 @@ const update = async (req, res) => {
   }
 }
 
+const deleteInvoice = async (req, res) => {
+  try {
+    //await Invoice.findByIdAndDelete(req.params.id)
+    const profile = await Profile.findById(req.user.profile)
+    profile.invoice.remove({ _id: req.params.id })
+    const project = await Project.find({})
+    project.forEach(element => {
+      element.invoiceList.remove({ _id: req.params.id })
+    });
 
+
+
+    await profile.save()
+    return res.status(204).end()
+  } catch (err) {
+    return res.status(500).json(err)
+  }
+}
 
 export {
   create,
