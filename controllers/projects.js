@@ -56,7 +56,7 @@ const deleteProject = async (req, res) => {
     await Project.findByIdAndDelete(req.params.id)
     const profile = await Profile.findById(req.user.profile)
     console.log(profile)
-    profile.projects.remove({ _id: req.params.id })
+    profile.project.remove({ _id: req.params.id })
     await profile.save()
     return res.status(204).end()
   } catch (err) {
@@ -67,10 +67,8 @@ const createTask = async (req, res) => {
   try {
     req.body.taskOwner = req.user.profile
     const project = await Project.findById(req.params.id)
-    console.log(project)
     project.taskList.push(req.body)
     await project.save()
-    console.log(project)
     const newTask = project.taskList[project.taskList.length - 1]
 
 
