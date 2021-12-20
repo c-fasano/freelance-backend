@@ -14,6 +14,7 @@ router.get('/',checkAuth, projectCtrl.index)
 router.post('/', checkAuth, projectCtrl.create)
 router.get('/:id', checkAuth, projectCtrl.show)
 router.put('/:id', checkAuth, projectCtrl.update)
+router.patch('/:id', checkAuth, projectCtrl.toggleActive)
 router.delete('/:id', checkAuth, projectCtrl.delete)
 
 //task for project routes 
