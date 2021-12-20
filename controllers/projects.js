@@ -94,7 +94,7 @@ const deleteTask = async (req, res) => {
 const updateTaskStatus = async (req, res) => {
   try {
     const updatedProject = await Project.findById(req.params.projectId)
-    console.log(req.body)
+    console.log('updatebody', req.body)
     
     const idx = updatedProject.taskList.findIndex(
       (task) => task._id.equals(req.params.taskId)
