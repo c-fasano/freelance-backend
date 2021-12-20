@@ -31,6 +31,7 @@ const index = async (req, res) => {
 const show = async (req, res) => {
   try {
     const project = await Project.findById(req.params.id)
+   
       
     return res.status(200).json(project)
   } catch (err) {
@@ -90,6 +91,32 @@ const deleteTask = async (req, res) => {
   }
 }
 
+const updateTaskStatus = async (req, res) => {
+  try {
+    const updatedProject = await Project.findById(req.params.projectId)
+    console.log(req.body)
+    
+    const idx = updatedProject.taskList.findIndex(
+      (task) => task._id.equals(req.params.taskId)
+    )
+    console.log(idx)
+
+    updatedProject.taskList[idx].status = req.body.status
+
+    await updatedProject.save()
+    return res.status(200).json(updatedProject)
+
+  } catch (err) {
+    res.status(500).json(err)
+  }
+}
+
+
+
+
+
+
+
 export {
   create,
   index,
@@ -97,5 +124,6 @@ export {
   update,
   deleteProject as delete,
   createTask,
-  deleteTask
+  deleteTask,
+  updateTaskStatus
 }

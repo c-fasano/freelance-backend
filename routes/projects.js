@@ -19,6 +19,7 @@ router.delete('/:id', checkAuth, projectCtrl.delete)
 //task for project routes 
 router.post('/:id/tasks', checkAuth, projectCtrl.createTask)
 router.delete('/:projectId/tasks/:taskId', checkAuth, projectCtrl.deleteTask)
+router.put('/:projectId/tasks/:taskId', checkAuth, projectCtrl.updateTaskStatus)
 
 export {
     router
