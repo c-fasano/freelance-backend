@@ -94,7 +94,7 @@ const deleteTask = async (req, res) => {
 const updateTaskStatus = async (req, res) => {
   try {
     const updatedProject = await Project.findById(req.params.projectId)
-    console.log(req.body)
+
     
     const idx = updatedProject.taskList.findIndex(
       (task) => task._id.equals(req.params.taskId)
@@ -104,7 +104,7 @@ const updateTaskStatus = async (req, res) => {
     updatedProject.taskList[idx].status = req.body.status
 
     await updatedProject.save()
-    return res.status(200).json(updatedProject)
+    return res.status(200).json(updatedProject.taskList[idx])
 
   } catch (err) {
     res.status(500).json(err)
