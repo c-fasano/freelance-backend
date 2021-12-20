@@ -51,12 +51,11 @@ const projectSchema = new Schema({
   },
   owner: { type: mongoose.Schema.Types.ObjectId, ref: 'Profile' },
   
-  clientList: [
-    {
+  client: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Client'
     }
-  ]
+  
 , 
 invoiceList: [
   {
