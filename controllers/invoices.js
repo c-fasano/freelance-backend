@@ -9,11 +9,19 @@ const create = async (req, res) => {
     req.body.creator = req.user.profile //change this to a field
     const invoice = await new Invoice(req.body)
     await invoice.save()
+    const profile = await Profile.findById(req.user.profile)
+    
+    
+    console.log(profile.project)
     await Profile.updateOne(
       { _id: req.user.profile },
       { $push: { invoice: invoice } }
     )
     
+    await Client.update(
+      {clientOwner: req.user.profile },
+      { $push: { invoiceList: invoice } }
+    )
     await Project.update(
       {owner: req.user.profile },
       { $push: { invoiceList: invoice } }
@@ -38,6 +46,11 @@ const index = async (req, res) => {
 const show = async (req, res) => {
   try {
     const invoice = await Invoice.findById(req.params.id)
+    const profile = await Profile.findById(req.user.profile)
+    .populate('client')
+    .populate('project')
+    console.log("list of projects", profile.project)
+    console.log("list of vlients", profile.client)
       
     return res.status(200).json(invoice)
   } catch (err) {
