@@ -104,7 +104,7 @@ const updateTaskStatus = async (req, res) => {
     updatedProject.taskList[idx].status = req.body.status
 
     await updatedProject.save()
-    return res.status(200).json(updatedProject)
+    return res.status(200).json(updatedProject.taskList[idx])
 
   } catch (err) {
     res.status(500).json(err)
