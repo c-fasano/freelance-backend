@@ -31,6 +31,7 @@ const index = async (req, res) => {
 const show = async (req, res) => {
   try {
     const project = await Project.findById(req.params.id)
+   
       
     return res.status(200).json(project)
   } catch (err) {
@@ -56,7 +57,7 @@ const deleteProject = async (req, res) => {
     await Project.findByIdAndDelete(req.params.id)
     const profile = await Profile.findById(req.user.profile)
     console.log(profile)
-    profile.projects.remove({ _id: req.params.id })
+    profile.project.remove({ _id: req.params.id })
     await profile.save()
     return res.status(204).end()
   } catch (err) {
@@ -72,7 +73,7 @@ const createTask = async (req, res) => {
     const newTask = project.taskList[project.taskList.length - 1]
 
 
-    return res.status(201).json(newComment)
+    return res.status(201).json(newTask)
   } catch (err) {
     res.status(500).json(err)
   }
@@ -90,6 +91,32 @@ const deleteTask = async (req, res) => {
   }
 }
 
+const updateTaskStatus = async (req, res) => {
+  try {
+    const updatedProject = await Project.findById(req.params.projectId)
+    console.log(req.body)
+    
+    const idx = updatedProject.taskList.findIndex(
+      (task) => task._id.equals(req.params.taskId)
+    )
+    console.log(idx)
+
+    updatedProject.taskList[idx].status = req.body.status
+
+    await updatedProject.save()
+    return res.status(200).json(updatedProject)
+
+  } catch (err) {
+    res.status(500).json(err)
+  }
+}
+
+
+
+
+
+
+
 export {
   create,
   index,
@@ -97,5 +124,6 @@ export {
   update,
   deleteProject as delete,
   createTask,
-  deleteTask
+  deleteTask,
+  updateTaskStatus
 }

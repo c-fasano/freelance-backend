@@ -13,7 +13,7 @@ const clientSchema = new Schema({
       required: true
   },
   
-  owner: { type: mongoose.Schema.Types.ObjectId, ref: 'Profile' },
+  clientOwner: { type: mongoose.Schema.Types.ObjectId, ref: 'Profile' },
 
   projectList: [
     {
