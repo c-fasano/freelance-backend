@@ -73,14 +73,21 @@ const update = async (req, res) => {
 
 const deleteInvoice = async (req, res) => {
   try {
-    //await Invoice.findByIdAndDelete(req.params.id)
+    await Invoice.findByIdAndDelete(req.params.id)
     const profile = await Profile.findById(req.user.profile)
     profile.invoice.remove({ _id: req.params.id })
     const project = await Project.find({})
+    .populate('invoiceList')
     project.forEach(element => {
       element.invoiceList.remove({ _id: req.params.id })
+      element.save()
     });
-
+    const client = await Client.find({})
+    .populate('invoiceList')
+    client.forEach(elements => {
+      elements.invoiceList.remove({ _id: req.params.id })
+      elements.save()
+    });
 
 
     await profile.save()
