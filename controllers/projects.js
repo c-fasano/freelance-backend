@@ -111,7 +111,20 @@ const updateTaskStatus = async (req, res) => {
   }
 }
 
+const toggleActive = async (req, res) => {
+  console.log("hitting")
+  try {
+    const updatedProject = await Project.findById(req.params.id)
+    console.log(updatedProject)
+    updatedProject.is_Active = !updatedProject.is_Active 
 
+    await updatedProject.save()
+    return res.status(200).json(updatedProject)
+
+  } catch (err) {
+    res.status(500).json(err)
+  }
+}
 
 
 
@@ -123,6 +136,7 @@ export {
   show,
   update,
   deleteProject as delete,
+  toggleActive,
   createTask,
   deleteTask,
   updateTaskStatus
