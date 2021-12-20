@@ -17,8 +17,8 @@ router.put('/:id', checkAuth, clientCtrl.update)
 router.delete('/:id', checkAuth, clientCtrl.delete)
 
 // Notes
-router.post('/:id/notes', checkAuth, postCtrl.createNote)
-router.delete('/:clientId/notes/:noteId', checkAuth, postCtrl.deleteNote)
+router.post('/:id/notes', checkAuth, clientCtrl.createNote)
+router.delete('/:clientId/notes/:noteId', checkAuth, clientCtrl.deleteNote)
 
 
 export {

@@ -40,7 +40,7 @@ invoiceList: [
     ref: 'Invoice'
   }
 ]
-}, { timestamps: true }),
+}, { timestamps: true })
 
 const Client = mongoose.model('Client', clientSchema)
 
