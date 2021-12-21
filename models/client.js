@@ -12,7 +12,6 @@ const noteSchema = new Schema(
   },
   { timestamps: true }
 )
-
 const clientSchema = new Schema({
   name: {
       type: String,

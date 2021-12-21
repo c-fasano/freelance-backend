@@ -2,49 +2,46 @@ import mongoose from 'mongoose'
 
 const Schema = mongoose.Schema
 
-
-
 const invoiceSchema = new Schema({
   title: {
     type: String,
     required: true
 },
   dateCreated: {
-      type: Date, 
-      required: true
+    type: Date, 
+    required: true
   },
   dueDate: {
     type: Date, 
     required: false
 },
-
-  creator: { type: mongoose.Schema.Types.ObjectId, ref: 'Profile' },
+  creator: { 
+    type: mongoose.Schema.Types.ObjectId, ref: 'Profile' 
+},
 
   is_Paid: {
-      type: Boolean,
-      default: false
+    type: Boolean,
+    default: false
   },
   
-  projectBilled: 
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Project'
-      
-    }
-  
-, 
-clientList: 
-  {
+  projectBilled: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Project'
+}, 
+clientList: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Client'
-  },
-  hourlyRate:{type:Number}
-  ,
-  hoursWorked:{type:Number},
-  invoiceTotal:{type:Number}
-  
 
-}, { timestamps: true })
+},
+hourlyRate:{
+    type:Number
+},
+hoursWorked:{
+    type:Number
+}
+},
+{ timestamps: true })
+
 
 const Invoice = mongoose.model('Invoice', invoiceSchema)
 

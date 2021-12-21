@@ -3,17 +3,15 @@ import { Project } from "../models/project.js";
 
 const create = async (req, res) => {
   try {
-    req.body.owner = req.user.profile //change this to a field
+    req.body.owner = req.user.profile 
     const project = await new Project(req.body)
     await project.save()
     await Profile.updateOne(
       { _id: req.user.profile },
       { $push: { project: project } }
     )
-
     const populated = await project.populate('client')
     return res.status(201).json(populated)
-
   } catch (err) {
     console.log(err)
     return res.status(500).json(err)
@@ -23,7 +21,8 @@ const create = async (req, res) => {
 const index = async (req, res) => {
   try {
     const projects = await Project.find({owner: req.user.profile })
-      .sort({ startDate: 'desc' }).populate('client')
+    .populate('client')  
+    .sort({ is_Active: 'desc' })
 
     return res.status(200).json(projects)
   } catch (err) {
