@@ -40,7 +40,8 @@ clientList:
   },
   hourlyRate:{type:Number}
   ,
-  hoursWorked:{type:Number}
+  hoursWorked:{type:Number},
+  invoiceTotal:{type:Number}
   
 
 }, { timestamps: true })
