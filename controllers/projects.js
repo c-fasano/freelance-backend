@@ -10,8 +10,10 @@ const create = async (req, res) => {
       { _id: req.user.profile },
       { $push: { project: project } }
     )
-    const populatedProject = await project.populate('client')
-    return res.status(201).json(populatedProject)
+
+    const populated = await project.populate('client')
+    return res.status(201).json(populated)
+
   } catch (err) {
     return res.status(500).json(err)
   }
@@ -20,7 +22,8 @@ const create = async (req, res) => {
 const index = async (req, res) => {
   try {
     const projects = await Project.find({owner: req.user.profile })
-      .sort({ startDate: 'desc' }).populate("client")
+
+      .sort({ startDate: 'desc' }).populate('client')
 
     return res.status(200).json(projects)
   } catch (err) {
@@ -94,7 +97,7 @@ const deleteTask = async (req, res) => {
 const updateTaskStatus = async (req, res) => {
   try {
     const updatedProject = await Project.findById(req.params.projectId)
-
+    console.log('updatebody', req.body)
     
     const idx = updatedProject.taskList.findIndex(
       (task) => task._id.equals(req.params.taskId)
