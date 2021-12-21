@@ -34,7 +34,7 @@ const create = async (req, res) => {
 const index = async (req, res) => {
   try {
     const invoices = await Invoice.find({creator: req.user.profile })
-      .sort({ dueDate: 'desc' })
+      .sort({ createdAt: 'desc' })
       .populate('clientList')
       .populate('projectBilled')
 
