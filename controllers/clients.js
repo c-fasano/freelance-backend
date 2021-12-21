@@ -19,6 +19,7 @@ const create = async (req, res) => {
 const index = async (req, res) => {
   try {
     const client = await Client.find({clientOwner: req.user.profile })
+    .sort({ name: 'asc' })
     return res.status(200).json(client)
   } catch (err) {
     return res.status(500).json(err)
