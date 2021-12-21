@@ -129,6 +129,16 @@ const toggleActive = async (req, res) => {
   }
 }
 
+const addHours = async (req, res) => {
+  try {
+    const updatedProject = await Project.findById(req.params.id)
+    updatedProject.hoursWorked = req.body.hoursWorked
+    await updatedProject.save()
+    return res.status(200).json(updatedProject)
+  } catch (error) {
+    res.status(500).json(error)
+  }
+}
 
 
 
@@ -142,5 +152,6 @@ export {
   toggleActive,
   createTask,
   deleteTask,
-  updateTaskStatus
+  updateTaskStatus,
+  addHours
 }
