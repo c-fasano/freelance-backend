@@ -61,8 +61,41 @@ const deleteClient = async (req, res) => {
   }
 }
 
+const createNote = async (req, res) => {
+  try {
+    req.body.clientOwner = req.user.profile
+    const client = await Client.findById(req.params.id)
+    client.notes.push(req.body)
+    await client.save()
+    const newNote = client.notes[client.notes.length - 1]
+
+    const profile = await Profile.findById(req.user.profile)
+    newNote.clientOwner = profile
+
+    return res.status(201).json(newNote)
+  } catch (err) {
+    res.status(500).json(err)
+  }
+}
+
+
+const deleteNote = async (req, res) => {
+  try {
+    const client = await Client.findById(req.params.clientId)
+    client.notes.remove({ _id: req.params.noteId })
+
+    await post.save()
+    return res.status(204).end()
+  } catch (err) {
+    res.status(500).json(err)
+  }
+}
+
 
 export {
+  createNote,
+  deleteNote,
+
   create,
   index,
   show,
