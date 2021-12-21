@@ -24,10 +24,12 @@ const invoiceSchema = new Schema({
       type: Boolean,
       default: false
   },
+  
   projectBilled: 
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Project'
+      
     }
   
 , 
@@ -35,7 +37,12 @@ clientList:
   {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Client'
-  }
+  },
+  hourlyRate:{type:Number}
+  ,
+  hoursWorked:{type:Number}
+  
+
 }, { timestamps: true })
 
 const Invoice = mongoose.model('Invoice', invoiceSchema)

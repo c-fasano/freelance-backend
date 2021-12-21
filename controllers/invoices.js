@@ -37,7 +37,7 @@ const index = async (req, res) => {
     const invoices = await Invoice.find({creator: req.user.profile })
       .sort({ dueDate: 'desc' })
       .populate('clientList')
-      
+      .populate('projectBilled')
 
     return res.status(200).json(invoices)
   } catch (err) {
@@ -56,7 +56,6 @@ const show = async (req, res) => {
     .populate('client')
     .populate('project')
 
-      
     return res.status(200).json(invoice)
   } catch (err) {
     return res.status(500).json(err)
@@ -71,6 +70,7 @@ const update = async (req, res) => {
       { new: true }
     ).populate('clientList')
     .populate('projectBilled')
+
     return res.status(200).json(updatedInvoice)
   } catch (err) {
     return res.status(500).json(err)
