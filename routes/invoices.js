@@ -11,6 +11,7 @@ router.get('/',checkAuth, invoicesCtrl.index)
 router.post('/', checkAuth, invoicesCtrl.create)
 router.get('/:id', checkAuth, invoicesCtrl.show)
 router.put('/:id', checkAuth, invoicesCtrl.update)
+router.patch('/:id', checkAuth, invoicesCtrl.togglePaid)
 router.delete('/:id', checkAuth, invoicesCtrl.delete)
 
 

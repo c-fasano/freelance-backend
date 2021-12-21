@@ -99,10 +99,26 @@ const deleteInvoice = async (req, res) => {
   }
 }
 
+const togglePaid = async (req, res) => {
+  try {
+    const updatedInvoice = await Invoice.findById(req.params.id)
+    updatedInvoice.is_Paid = !updatedInvoice.is_Paid
+
+    await updatedInvoice.save()
+    return res.status(200).json(updatedInvoice)
+
+  } catch (err) {
+    res.status(500).json(err)
+  }
+}
+
 export {
   create,
   index,
   show,
   update,
   deleteInvoice as delete,
+
+  togglePaid
+
 }
