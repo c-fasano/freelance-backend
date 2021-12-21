@@ -15,6 +15,7 @@ const create = async (req, res) => {
     return res.status(201).json(populated)
 
   } catch (err) {
+    console.log(err)
     return res.status(500).json(err)
   }
 }
@@ -22,7 +23,6 @@ const create = async (req, res) => {
 const index = async (req, res) => {
   try {
     const projects = await Project.find({owner: req.user.profile })
-
       .sort({ startDate: 'desc' }).populate('client')
 
     return res.status(200).json(projects)
