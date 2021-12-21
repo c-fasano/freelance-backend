@@ -31,12 +31,11 @@ const invoiceSchema = new Schema({
     }
   
 , 
-clientList: [
+clientList: 
   {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Client'
   }
-]
 }, { timestamps: true })
 
 const Invoice = mongoose.model('Invoice', invoiceSchema)
