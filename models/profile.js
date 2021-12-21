@@ -6,8 +6,8 @@ const profileSchema = new mongoose.Schema({
 
   project: [
     {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Project'
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Project'
     }
   ],
 client: [

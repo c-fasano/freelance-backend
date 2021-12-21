@@ -17,7 +17,6 @@ const create = async (req, res) => {
       { _id: req.user.profile },
       { $push: { invoice: u2 } }
     )
-    
     await Client.update(
       {clientOwner: req.user.profile },
       { $push: { invoiceList: u2 } }
@@ -55,7 +54,6 @@ const show = async (req, res) => {
     const profile = await Profile.findById(req.user.profile)
     .populate('client')
     .populate('project')
-
     return res.status(200).json(invoice)
   } catch (err) {
     return res.status(500).json(err)
@@ -94,8 +92,6 @@ const deleteInvoice = async (req, res) => {
       elements.invoiceList.remove({ _id: req.params.id })
       elements.save()
     });
-
-
     await profile.save()
     return res.status(204).end()
   } catch (err) {
@@ -109,5 +105,4 @@ export {
   show,
   update,
   deleteInvoice as delete,
-
 }

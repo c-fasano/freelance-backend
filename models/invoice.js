@@ -15,7 +15,6 @@ const invoiceSchema = new Schema({
     type: Date, 
     required: false
 },
-
   creator: { 
     type: mongoose.Schema.Types.ObjectId, ref: 'Profile' 
 },
