@@ -10,9 +10,12 @@ const create = async (req, res) => {
       { _id: req.user.profile },
       { $push: { project: project } }
     )
+
     const populated = await project.populate('client')
     return res.status(201).json(populated)
+
   } catch (err) {
+    console.log(err)
     return res.status(500).json(err)
   }
 }
@@ -21,6 +24,7 @@ const index = async (req, res) => {
   try {
     const projects = await Project.find({owner: req.user.profile })
       .sort({ startDate: 'desc' }).populate('client')
+
     return res.status(200).json(projects)
   } catch (err) {
     return res.status(500).json(err)
@@ -30,7 +34,6 @@ const index = async (req, res) => {
 const show = async (req, res) => {
   try {
     const project = await Project.findById(req.params.id)
-   
       
     return res.status(200).json(project)
   } catch (err) {
@@ -45,7 +48,8 @@ const update = async (req, res) => {
       req.body,
       { new: true }
     )
-    return res.status(200).json(updatedProject)
+    const populatedProject = await updatedProject.populate('client')
+    return res.status(200).json(populatedProject)
   } catch (err) {
     return res.status(500).json(err)
   }
