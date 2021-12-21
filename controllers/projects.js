@@ -94,7 +94,7 @@ const deleteTask = async (req, res) => {
 const updateTaskStatus = async (req, res) => {
   try {
     const updatedProject = await Project.findById(req.params.projectId)
-    console.log(req.body)
+
     
     const idx = updatedProject.taskList.findIndex(
       (task) => task._id.equals(req.params.taskId)
@@ -102,6 +102,21 @@ const updateTaskStatus = async (req, res) => {
     console.log(idx)
 
     updatedProject.taskList[idx].status = req.body.status
+
+    await updatedProject.save()
+    return res.status(200).json(updatedProject.taskList[idx])
+
+  } catch (err) {
+    res.status(500).json(err)
+  }
+}
+
+const toggleActive = async (req, res) => {
+  console.log("hitting")
+  try {
+    const updatedProject = await Project.findById(req.params.id)
+    console.log(updatedProject)
+    updatedProject.is_Active = !updatedProject.is_Active 
 
     await updatedProject.save()
     return res.status(200).json(updatedProject)
@@ -115,14 +130,13 @@ const updateTaskStatus = async (req, res) => {
 
 
 
-
-
 export {
   create,
   index,
   show,
   update,
   deleteProject as delete,
+  toggleActive,
   createTask,
   deleteTask,
   updateTaskStatus
