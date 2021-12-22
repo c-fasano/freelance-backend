@@ -19,8 +19,7 @@ const create = async (req, res) => {
 const index = async (req, res) => {
   try {
     const client = await Client.find({clientOwner: req.user.profile })
-      
-
+    .sort({ name: 'asc' })
     return res.status(200).json(client)
   } catch (err) {
     return res.status(500).json(err)
@@ -68,7 +67,6 @@ const createNote = async (req, res) => {
     client.notes.push(req.body)
     await client.save()
     const newNote = client.notes[client.notes.length - 1]
-
     const profile = await Profile.findById(req.user.profile)
     newNote.clientOwner = profile
 
@@ -83,7 +81,6 @@ const deleteNote = async (req, res) => {
   try {
     const client = await Client.findById(req.params.clientId)
     client.notes.remove({ _id: req.params.noteId })
-
     await post.save()
     return res.status(204).end()
   } catch (err) {
@@ -95,7 +92,6 @@ const deleteNote = async (req, res) => {
 export {
   createNote,
   deleteNote,
-
   create,
   index,
   show,
