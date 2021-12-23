@@ -11,6 +11,7 @@ const create = async (req, res) => {
       { $push: { project: project } }
     )
     const populated = await project.populate('client')
+    console.log(populated)
     return res.status(201).json(populated)
   } catch (err) {
     console.log(err)
@@ -33,7 +34,7 @@ const index = async (req, res) => {
 const show = async (req, res) => {
   try {
     const project = await Project.findById(req.params.id)
-      
+    console.log(project)
     return res.status(200).json(project)
   } catch (err) {
     return res.status(500).json(err)

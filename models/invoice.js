@@ -38,6 +38,9 @@ hourlyRate:{
 },
 hoursWorked:{
     type:Number
+},
+invoiceTotal: {
+  type: Number
 }
 },
 { timestamps: true })
