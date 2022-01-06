@@ -34,6 +34,7 @@ const index = async (req, res) => {
 const show = async (req, res) => {
   try {
     const project = await Project.findById(req.params.id)
+    .populate('client')
     console.log(project)
     return res.status(200).json(project)
   } catch (err) {
