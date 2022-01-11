@@ -102,8 +102,8 @@ const deleteInvoice = async (req, res) => {
 const togglePaid = async (req, res) => {
   try {
     const updatedInvoice = await Invoice.findById(req.params.id)
+    .populate('clientList')
     updatedInvoice.is_Paid = !updatedInvoice.is_Paid
-
     await updatedInvoice.save()
     return res.status(200).json(updatedInvoice)
 
