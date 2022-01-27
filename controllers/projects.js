@@ -102,7 +102,7 @@ const updateTaskStatus = async (req, res) => {
 
 const toggleActive = async (req, res) => {
   try {
-    const updatedProject = await Project.findById(req.params.id)
+    const updatedProject = await Project.findById(req.params.id).populate('client')
     updatedProject.is_Active = !updatedProject.is_Active 
     await updatedProject.save()
     return res.status(200).json(updatedProject)
